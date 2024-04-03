@@ -30,25 +30,25 @@ function App() {
   
   }
   return (
-    <>
+    <div className="flex flex-col h-screen">
       <div id="header" className="w-full">
         <Header />
       </div>
 
-      <main className="flex h-screen">
+      <main className="flex h-full w-full grow">
         {/* Aside */}
-        <div className="basis-1/3 lg:basis-1/4 xl:basis-1/5">
+        <div className="w-1/3 lg:w-1/4 xl:w-1/5">
 
         <Aside/>
         </div>
         <Separator orientation="vertical"/>
 
 
-        <div id="content" className="basis-2/3 lg:basis-3/4 xl:basis-4/5">
+        <div id="content" className="w-2/3 lg:w-3/4 xl:w-4/5">
           <Boards board={board}/>
         </div>
       </main>
-    </>
+    </div>
   );
 }
 
