@@ -1,30 +1,27 @@
-# React + TypeScript + Vite
+Proyecto Trello Clone + Time Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+Objetivo del Proyecto
+El objetivo principal de este proyecto es proporcionar a los desarrolladores una oportunidad para explorar y aprender cómo construir aplicaciones web modernas utilizando tecnologías como React.js y Tailwind CSS.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Características Principales
+Clon de Trello Personalizado: Diseñado para replicar la funcionalidad de Trello, este clon te permitirá organizar tus tareas de manera eficiente.
+Time Tracker Integrado: Nunca pierdas de vista el tiempo mientras trabajas en tus tareas. Con el Time Tracker integrado, podrás registrar y monitorear el tiempo dedicado a cada tarea.
+Diseño Moderno con Tailwind CSS: Utilizando Tailwind CSS, el diseño de este proyecto es moderno, receptivo y altamente personalizable.
+Componentes Reutilizables: Se están creando una variedad de componentes reutilizables para facilitar el desarrollo y la mantenibilidad del proyecto.
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Tecnologías Utilizadas
+React.js: El marco de JavaScript de código abierto para construir interfaces de usuario.
+Tailwind CSS: Un marco de diseño CSS utilizable y altamente personalizable.
+React Router DOM: Para la navegación y el enrutamiento en la aplicación.
+Formik y Yup: Para manejar formularios y validación de datos.
 
-- Configure the top-level `parserOptions` property like this:
+¡Disfruta explorando y desarrollando en este emocionante proyecto! Si tienes alguna pregunta o sugerencia, no dudes en ponerte en contacto con nosotros.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+Happy Coding! 🚀🔥
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+
+
+
