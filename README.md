@@ -1,27 +1,20 @@
-Proyecto Trello Clone + Time Tracker
+
+¡Bienvenidos al Repositorio del Clon de Trello con Time Tracker!
 
 
-Objetivo del Proyecto
-El objetivo principal de este proyecto es proporcionar a los desarrolladores una oportunidad para explorar y aprender cómo construir aplicaciones web modernas utilizando tecnologías como React.js y Tailwind CSS.
+¿Qué me llevó a iniciar este proyecto?
 
-Características Principales
-Clon de Trello Personalizado: Diseñado para replicar la funcionalidad de Trello, este clon te permitirá organizar tus tareas de manera eficiente.
-Time Tracker Integrado: Nunca pierdas de vista el tiempo mientras trabajas en tus tareas. Con el Time Tracker integrado, podrás registrar y monitorear el tiempo dedicado a cada tarea.
-Diseño Moderno con Tailwind CSS: Utilizando Tailwind CSS, el diseño de este proyecto es moderno, receptivo y altamente personalizable.
-Componentes Reutilizables: Se están creando una variedad de componentes reutilizables para facilitar el desarrollo y la mantenibilidad del proyecto.
+Como desarrollador en busca de nuevas oportunidades y experiencias, siempre estoy buscando maneras de mejorar mis habilidades técnicas y explorar nuevas tecnologías. Decidí embarcarme en este proyecto porque quería desafiarme a mí mismo y aprender más sobre el desarrollo de aplicaciones web modernas.
 
+Objetivos del Proyecto
 
-Tecnologías Utilizadas
-React.js: El marco de JavaScript de código abierto para construir interfaces de usuario.
-Tailwind CSS: Un marco de diseño CSS utilizable y altamente personalizable.
-React Router DOM: Para la navegación y el enrutamiento en la aplicación.
+El principal objetivo de este proyecto es construir un clon funcional de Trello que no solo replique su funcionalidad básica, sino que también integre una característica emocionante: un Time Tracker que permita a los usuarios registrar y monitorear el tiempo dedicado a cada tarea.
+
+¿Qué tecnologías estoy utilizando?
+
+React.js: Como marco principal para el desarrollo de la interfaz de usuario.
+Tailwind CSS: Para estilizar y diseñar la aplicación de manera eficiente.
+React Router DOM: Para la navegación entre diferentes componentes de la aplicación.
 Formik y Yup: Para manejar formularios y validación de datos.
-
-¡Disfruta explorando y desarrollando en este emocionante proyecto! Si tienes alguna pregunta o sugerencia, no dudes en ponerte en contacto con nosotros.
-
-Happy Coding! 🚀🔥
-
-
-
-
-
+Estado Actual del Proyecto
+En este momento, me encuentro trabajando en el diseño y la implementación de los componentes principales de la aplicación. Estoy emocionado de ver cómo tomará forma el proyecto y de compartir mi progreso con la comunidad.

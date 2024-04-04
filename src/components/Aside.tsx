@@ -5,7 +5,7 @@ import { Separator } from "./ui/separator";
 import { ClipboardList, Plus, Ellipsis } from "lucide-react";
 
 export const Aside = () => {
-  const name = "Roberto Zaracho";
+  const name = "Rober Zaracho";
 
   const boards = [
     { id: 1, title: "Tablero 1" },
