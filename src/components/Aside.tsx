@@ -1,30 +1,35 @@
+import { useUserStore } from "@/utils/user";
 import BoardOptions from "./BoardOptions";
 import { BoardWrapper } from "./BoardWrapper";
+import SetUserName from "./SetUserName";
 import { Avatar } from "./ui/avatar";
 import { Separator } from "./ui/separator";
-import { ClipboardList, Plus, Ellipsis } from "lucide-react";
+import { ClipboardList, Plus, Ellipsis, Pencil } from "lucide-react";
 
+const boards = [
+  { id: 1, title: "Tablero 1" },
+  { id: 2, title: "Tablero 2" },
+];
 export const Aside = () => {
-  const name = "Rober Zaracho";
-
-  const boards = [
-    { id: 1, title: "Tablero 1" },
-    { id: 2, title: "Tablero 2" },
-  ];
+  const { user } = useUserStore();
 
   return (
     <aside id="aside" className="w-full bg-muted h-full">
       <div id="name" className="flex items-center pl-4 h-20">
         <Avatar>
           <div className="w-full h-full bg-foreground text-background flex items-center justify-center font-medium text-2xl">
-            {name[0].toUpperCase()}
+            {user && user?.length > 0 && user[0].toUpperCase()}
           </div>
         </Avatar>
 
         <div className="p-4 flex flex-col">
-          <h2 className="text-xl font-bold">{name}</h2>
+          <h2 className="text-xl font-bold">{user}</h2>
           <span className="text-xs italic">Gratis</span>
         </div>
+
+        <SetUserName>
+          <Pencil />
+        </SetUserName>
       </div>
       <Separator />
       <div id="boards">
@@ -47,7 +52,10 @@ export const Aside = () => {
           {/* //? Tablero 1 */}
           <div id="boards-container" className="flex flex-col py-4">
             {boards.map((board) => (
-              <div key={board.id} className="px-4 py-1 hover:bg-muted-foreground">
+              <div
+                key={board.id}
+                className="px-4 py-1 hover:bg-muted-foreground"
+              >
                 <BoardWrapper id={`board-${board.id}`}>
                   <h3 className="">{board.title}</h3>
                   <BoardOptions>

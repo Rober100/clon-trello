@@ -1,153 +1,124 @@
-import { Board, Theme } from "./types.d";
+import { Theme, type Board, type List as ListType } from "./types.d";
 import { Separator } from "./ui/separator";
 import List from "./List";
-import { Ellipsis, Plus } from "lucide-react";
-import { Lumiflex, Novatrix, Opulento, Tranquiluxe, Velustro } from "uvcanvas";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "./ui/dialog";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Ellipsis, Plus } from 'lucide-react'
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useBoardsStore } from "@/utils/boards";
+import { themes } from "@/consts";
+import DialogAddList from '@/components/DialogAddList'
+import DropdownMenuOptions from "./DropdownMenuOptions";
+import { useDragAndDrop } from "@formkit/drag-and-drop/react";
 
-type Props = {
-  board: Board;
-};
+export type ThemeOptionType = {
+  id: Theme;
+  component: JSX.Element;
+}
 
-const themes = {
-  lumiflex: <Lumiflex />,
-  novatrix: <Novatrix />,
-  velustro: <Velustro />,
-  opulento: <Opulento />,
-  tranquiluxe: <Tranquiluxe />,
-};
+const Boards = () => {
+  const { boards, updateBoard, removeBoard } = useBoardsStore()
+  const { boardId } = useParams()
+  const [board, setBoard] = useState<Board>(boards.find(board => board.id === boardId)!)
+  const [title, setTitle] = useState<string>(board.title)
+  const [theme, setTheme] = useState<Theme>(board.theme)
+  const [remove, setRemove] = useState<boolean>(false)
+  const navigate = useNavigate()
+  const [listsParent, lists, setLists] = useDragAndDrop<HTMLDivElement, ListType>(
+    board.lists,
+  )
 
-const Boards = ({ board }: Props) => {
-  const [themeMenuOpen, setThemeMenuOpen] = useState(false);
-  const [theme, setTheme] = useState<Theme>(board.theme);
+  useEffect(() => {
+    const newBoard = {
+      ...board,
+      title,
+      theme
+    }
+
+    setBoard(newBoard)
+    updateBoard(newBoard)
+  }, [title, theme])
+
+  useEffect(() => {
+    updateBoard({
+      ...board,
+      lists
+    })
+  }, [lists])
+
+  useEffect(() => {
+    if (!remove || !boardId) return
+
+    removeBoard(boardId)
+    navigate('/')
+  }, [remove])
+
+  useEffect(() => {
+    setTitle(board.title)
+    setTheme(board.theme)
+    setLists(board.lists)
+  }, [board])
+
+  useEffect(() => {
+    setBoard(boards.find(board => board.id === boardId)!)
+  }, [boardId, boards])
 
   return (
-    <section className="w-full h-full bg-cover relative">
-      {/* //? Tema  */}
-      {themes[theme] && themes[theme]}
+    <>
+      <section className="w-full h-full bg-cover relative overflow-hidden">
+        {/* Tema */}
+        <div className="w-screen h-full absolute">
+          {themes.find(themeOption => themeOption.id === theme)?.component}
+        </div>
 
-      <div className="absolute top-0 left-0 w-full h-[calc(100vh-9.2rem)]">
-        <div
-          id="board-header"
-          className="w-full h-20 flex items-center justify-between p-4 bg-slate-800 bg-opacity-80 text-primary-foreground"
-        >
-          <h2 className="font-semibold text-2xl ">{board.title}</h2>
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <div className="p-1 hover:bg-slate-400 hover:bg-opacity-40 rounded-xl cursor-pointer">
+        <div className="absolute top-0 left-0 h-[calc(100vh-9.1rem)] w-full">
+          <div
+            id="board-header"
+            className="w-full h-20 flex items-center justify-between p-4 bg-slate-800 bg-opacity-80 text-primary-foreground"
+          >
+            <h2 className="pl-4 font-medium text-2xl">{title}</h2>
+            <DropdownMenuOptions
+              type="board"
+              setTitle={setTitle}
+              setTheme={setTheme}
+              setRemove={setRemove}
+            >
+              <div className="p-1 hover:bg-slate-400 hover:bg-opacity-40 rounded-sm cursor-pointer">
                 <Ellipsis size={24} />
               </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel className="cursor-pointer">
-                Board
-              </DropdownMenuLabel>
-              <DropdownMenuItem className="cursor-pointer">
-                Rename
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => setThemeMenuOpen(true)}
-                className="cursor-pointer"
-              >
-                Change Theme
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <span className="text-destructive">Delete</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+            </DropdownMenuOptions>
 
-        <Separator />
+          </div>
 
-        <div
-          id="board-content"
-          className="flex gap-4 p-4 overflow-scrool h-full w-full"
-        >
-          {board.lists.map((list) => (
-            <List key={list.title} list={list} boardName={board.title} />
-          ))}
+          <Separator />
+
           <div
-            id="add-list"
-            className="min-w-52 h-fit bg-primary rounded-lg p-4 flex justify-between text-primary-foreground hover:opacity-50 cursor-pointer gap-2"
+            id="board-content"
+            className="flex gap-4 p-4 overflow-x-scroll h-full w-full"
           >
-            <h3 className="font-semibold"> Añadir listas</h3>
-            <Plus />
+            <div
+              ref={listsParent}
+              className="flex gap-4"
+            >
+              {lists.map(list => (
+                <List key={list.id} list={list} boardName={board.title} />
+              ))}
+            </div>
+
+            <DialogAddList boardId={board.id}>
+              <div
+                id="add-list"
+                className="min-w-52 h-fit bg-primary rounded-lg p-4 flex justify-between text-primary-foreground hover:opacity-50 cursor-pointer gap-2"
+              >
+                <h3 className="font-semibold">Añadir lista</h3>
+                <Plus />
+              </div>
+            </DialogAddList>
           </div>
         </div>
-      </div>
-      <ThemeMenu open={themeMenuOpen} setOpen={setThemeMenuOpen} />
-    </section>
-  );
-};
 
-const ThemeMenu = ({
-  open,
-  setOpen,
-}: {
-  open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
-}) => {
-  return (
-    <Dialog open={open}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Change Theme</DialogTitle>
-          <DialogDescription asChild>
-            <div className="py-4 flex flex-wrap justify-center">
-              <div className="w-1/2 h- cursor-pointer relative">
-                <Lumiflex />
-                <div className="obsolute top-0 left-0 w-full h-full hover:bg-slate-800 hover:bg-opacity-40"></div>
-              </div>
-              <div className="w-1/2 h-36 cursor-pointe relative">
-                <Novatrix />
-                <div className="obsolute top-0 left-0 w-full h-full hover:bg-slate-800 hover:bg-opacity-40"></div>
-              </div>
-              <div className="w-1/2 h-36 cursor-pointer relative">
-                <Velustro />
-                <div className="obsolute top-0 left-0 w-full h-full hover:bg-slate-800 hover:bg-opacity-40"></div>
-              </div>
-              <div className="w-1/2 h-36 cursor-pointer relative">
-                <Opulento />
-                <div className="obsolute top-0 left-0 w-full h-full hover:bg-slate-800 hover:bg-opacity-40"></div>
-              </div>
-              <div className="w-1/2 h-36 cursor-pointer relative">
-                <Tranquiluxe />
-                <div className="obsolute top-0 left-0 w-full h-full hover:bg-slate-800 hover:bg-opacity-40"></div>
-              </div>
-            </div>
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <DialogClose asChild>
-            <button
-              className=" px-4 py-2 rounded-xl hover:bg-red-600 bg-destructive text-primary-foreground font-medium"
-              type="button"
-              onClick={() => setOpen(false)}
-            >
-              Cancel
-            </button>
-          </DialogClose>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
-};
+      </section>
+    </>
+  )
+}
 
-export default Boards;
+export default Boards
