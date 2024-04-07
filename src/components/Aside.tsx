@@ -23,13 +23,16 @@ export const Aside = () => {
         </Avatar>
 
         <div className="p-4 flex flex-col">
-          <h2 className="text-xl font-bold">{user}</h2>
+          <BoardWrapper id="edit-name">
+            <h2 className="text-xl font-bold">{user}</h2>
+            <BoardOptions>
+              <SetUserName>
+                <Pencil size={20}/>
+              </SetUserName>
+            </BoardOptions>
+          </BoardWrapper>
           <span className="text-xs italic">Gratis</span>
         </div>
-
-        <SetUserName>
-          <Pencil />
-        </SetUserName>
       </div>
       <Separator />
       <div id="boards">
